@@ -1,0 +1,44 @@
+This project is written in RMarkdown format.
+All r code begins with "```{r}" and ends with "```"
+Use "#" before a line of regular text to create headers
+---
+title: "Project 1"
+author: "Kenneth Foster"
+date: "April 21, 2018"
+output: html_document
+---
+
+```{r, include = FALSE}
+setwd("C:\\Users\\kenny\\Desktop\\UCLA Spring 2018\\Forecasting\\Project 1")
+par(mar=c(1,1,1,1))
+rm(list=ls(all=TRUE))
+energy_data <- read.csv("energy_data.csv", header = TRUE, stringsAsFactors = TRUE)
+attach(energy_data)
+
+stuff <- read.csv("Trimmed Data set.csv", header = TRUE)
+write.csv(energy_data, file = "energy_data.csv")
+
+mwh <- stuff$Megawatthours
+
+energy_data <- data.frame(energy_data, mwh)
+```
+
+# I. Introduction
+
+# II. Results
+
+## 1. Modeling and Forecasting Trend
+
+### (a) Time Series plot
+
+```{r}
+# Here, we convert mega-watt hours, the standard for measuring electricity consumption, into a time series format. Because the total amount of MWH is very large and impractical to conceptualize, we divide by 1,000,000 a measurement that was already represented as thousands. 
+
+# In short, all values of mega-watt hours will be represented in billions.
+
+mwh_ts <- ts(mwh, start = 1990, end = c(2016, 12), frequency = 12)
+est.mwh <- (mwh_ts/1000000)
+
+# Plot the time series of electricity consumption.
+ts.plot(est.mwh)
+```
